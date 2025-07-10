@@ -4,6 +4,7 @@ class TicTacToe extends Matrix {
   //ex 7
   constructor(row, columns) {
     super(row, columns)
+    //this.turn = 1
   }
 
   loadBoard() {
@@ -24,8 +25,17 @@ class TicTacToe extends Matrix {
   //ex 8
   play(rowNum, colNum, player) {
     const sign = player === 1 ? "x" : "o"
+    //console.log("player " + player)
+    //console.log(this.turn + " turn")
 
-    this.alter(rowNum, colNum, sign)
+    //extension 1
+    if (this.matrix[rowNum][colNum] === ".") {
+      this.alter(rowNum, colNum, sign)
+    } else {
+      console.log("error")
+    }
+
+    this.turn = ((player + 1) % 2) + 1
 
     //ex 9
     let col = colNum
@@ -40,16 +50,20 @@ class TicTacToe extends Matrix {
     if (count === 3) {
       console.log(`Congratulations Player ${player}`)
 
+      //extension 3
+      //this.loadBoard()
     }
   }
 }
 
 let board = new TicTacToe()
 board.loadBoard()
-    
+
 board.play(2, 2, 1)
 board.play(0, 0, 2)
 board.play(0, 2, 1)
 board.play(1, 0, 2)
+
 board.play(1, 2, 1)
 
+board.print()
