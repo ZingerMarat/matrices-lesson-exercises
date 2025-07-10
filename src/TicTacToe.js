@@ -4,7 +4,7 @@ class TicTacToe extends Matrix {
   //ex 7
   constructor(row, columns) {
     super(row, columns)
-    //this.turn = 1
+    this.whoNext = 1
   }
 
   loadBoard() {
@@ -24,46 +24,47 @@ class TicTacToe extends Matrix {
 
   //ex 8
   play(rowNum, colNum, player) {
-    const sign = player === 1 ? "x" : "o"
-    //console.log("player " + player)
-    //console.log(this.turn + " turn")
+    if (this.whoNext === player) {
+      const sign = player === 1 ? "x" : "o"
 
-    //extension 1
-    if (this.matrix[rowNum][colNum] === ".") {
-      this.alter(rowNum, colNum, sign)
-    } else {
-      console.log("error")
-    }
-
-    this.turn = ((player + 1) % 2) + 1
-
-    //ex 9
-    let col = colNum
-    let count = 0
-
-    for (let r = 0; r < this.matrix.length; r++) {
-      if (this.matrix[r][col] === sign) {
-        count++
+      //extension 1
+      if (this.matrix[rowNum][colNum] === ".") {
+        this.alter(rowNum, colNum, sign)
+      } else {
+        console.log("error")
       }
-    }
 
-    if (count === 3) {
-      console.log(`Congratulations Player ${player}`)
+      //extension 2
+      this.whoNext = (player % 2) + 1
 
-      //extension 3
-      //this.loadBoard()
+      //ex 9
+      let col = colNum
+      let count = 0
+
+      for (let r = 0; r < this.matrix.length; r++) {
+        if (this.matrix[r][col] === sign) {
+          count++
+        }
+      }
+
+      if (count === 3) {
+        console.log(`Congratulations Player ${player}`)
+
+        //extension 3
+        this.loadBoard()
+        this.whoNext = 1
+      }
+    } else {
+      console.log("error whoNext")
     }
   }
 }
 
-let board = new TicTacToe()
+let board = new TicTacToe(3, 3)
 board.loadBoard()
 
 board.play(2, 2, 1)
 board.play(0, 0, 2)
 board.play(0, 2, 1)
 board.play(1, 0, 2)
-
 board.play(1, 2, 1)
-
-board.print()
