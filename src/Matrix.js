@@ -45,7 +45,7 @@ class Matrix {
     }
   }
 
-  alter = function (r, c, v) {
+  alter(r, c, v) {
     this.matrix[r][c] = v
   }
 
